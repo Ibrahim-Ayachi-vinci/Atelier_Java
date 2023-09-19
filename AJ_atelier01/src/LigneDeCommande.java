@@ -31,10 +31,6 @@ public class LigneDeCommande {
 
     @Override
     public String toString() {
-        return "LigneDeCommande{" +
-                "pizza=" + pizza +
-                ", quantite=" + quantite +
-                ", prixUnitaire=" + prixUnitaire +
-                '}';
+        return  quantite + " " + pizza.getTitre() + "  à " + prixUnitaire ;
     }
 }

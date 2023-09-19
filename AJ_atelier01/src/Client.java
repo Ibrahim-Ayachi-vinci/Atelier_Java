@@ -1,3 +1,5 @@
+import jdk.jshell.execution.Util;
+
 import java.util.Objects;
 
 public class Client {
@@ -39,13 +41,13 @@ public class Client {
     }
 
     public boolean enregistrer (Commande commande){
-        if (!commande.getClient().equals(this)){
-            return false;
-        }
         if (commandeEnCours != null) {
             return false;
         }
-            commande = commandeEnCours;
+        if (!commande.getClient().equals(this)){
+            return false;
+        }
+            this.commandeEnCours = commande;
         return true;
         }
 
