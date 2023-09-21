@@ -44,7 +44,7 @@ public class Main {
 		} catch (UnsupportedOperationException uoe){}
 
 		Ingredient ing = new Ingredient("Blanc de poulet");
-		plat.ajouterIngredient(ing,400, Unite.GRAMME);
+		plat.ajouterIngredient(ing,600, Unite.GRAMME);
 		ing = new Ingredient("Céleri");
 		plat.ajouterIngredient(ing,200, Unite.GRAMME);
 		ing = new Ingredient("Carottes");
@@ -60,6 +60,8 @@ public class Main {
 		IngredientQuantifie ingQuantifie = plat.trouverIngredientQuantifie(new Ingredient("Blanc de poulet"));
 		System.out.println("Quantité de blanc de poulet nécessaire : " + ingQuantifie.getQuantite() + " " + ingQuantifie.getUnite()+"\n");
 		System.out.println(plat);
+
+
 	}
 
 }
