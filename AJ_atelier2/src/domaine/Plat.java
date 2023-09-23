@@ -14,8 +14,9 @@ public class Plat {
     private Duration dureeEnMinute;
     private List<Instruction> recette;
     private Set <IngredientQuantifie> ingredients;
+    private Type type;
 
-    public Plat(String nom, int nbPersonne, Difficulte niveauDeDifficulte, Cout cout){
+    public Plat(String nom, int nbPersonne, Difficulte niveauDeDifficulte, Cout cout, Type type){
         Util.checkString(nom);
         Util.checkPositiveOrNul(nbPersonne);
         Util.checkObject(niveauDeDifficulte);
@@ -25,6 +26,7 @@ public class Plat {
         this.niveauDeDifficulte = niveauDeDifficulte;
         this.cout = cout;
         this.dureeEnMinute = Duration.ofMinutes(0);
+        this.type = type;
 
         recette = new ArrayList<Instruction>();
         ingredients = new HashSet<IngredientQuantifie>();
@@ -50,6 +52,9 @@ public class Plat {
         return dureeEnMinute;
     }
 
+    public Type getType() {
+        return type;
+    }
 
     public void insererInstruction(int position, Instruction instruction) {
         Util.checkStrictlyPositive(position);
@@ -214,5 +219,9 @@ public class Plat {
             }
             return text;
         }
+    }
+    public enum Type {
+        ENTREE, PLAT, DESSERT;
+
     }
 }
