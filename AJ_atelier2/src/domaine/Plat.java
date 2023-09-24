@@ -7,8 +7,8 @@ import java.util.*;
 
 public class Plat {
 
-    private String nom;
-    private int nbPersonne;
+    private final String nom;
+    private final int nbPersonne;
     private Difficulte niveauDeDifficulte;
     private Cout cout;
     private Duration dureeEnMinute;
@@ -221,7 +221,15 @@ public class Plat {
         }
     }
     public enum Type {
-        ENTREE, PLAT, DESSERT;
+        ENTREE("Entrée"), PLAT("Plat"), DESSERT("Dessert");
 
+        private String nom;
+
+        Type(String nom){
+            this.nom = nom;
+        }
+        public String getNom() {
+            return this.nom;
+        }
     }
 }
