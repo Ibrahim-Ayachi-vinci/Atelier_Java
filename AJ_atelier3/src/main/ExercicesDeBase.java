@@ -3,9 +3,7 @@ package main;
 import domaine.Trader;
 import domaine.Transaction;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -67,7 +65,8 @@ public class ExercicesDeBase {
     private void predicats1() {
         System.out.println("predicats1");
         Stream<Transaction> s = transactions
-                .stream(); // TODO filtrer
+                .stream() // TODO filtrer
+                .filter(e -> e.getYear() == 2011);
         System.out.println("sout du Stream brut" + s);
         s.forEach(System.out::println);
     }
@@ -76,7 +75,8 @@ public class ExercicesDeBase {
 
         System.out.println("predicats2");
         var s = transactions
-                .stream(); // TODO filtrer
+                .stream() // TODO filtrer
+                .filter(e -> e.getValue() > 600);
 
         s.forEach(System.out::println);
     }
@@ -86,45 +86,76 @@ public class ExercicesDeBase {
 
         System.out.println("predicats3");
         var s = transactions
-                .stream(); // TODO filtrer
+                .stream() // TODO filtrer
+                .filter(e -> e.getTrader().getName().equals("Raoul"));
         s.forEach(System.out::println);
     }
 
     private void map1() {
         System.out.println("map1");
         // TODO transformer
+        List<String> listeVille = transactions.stream()
+                .map(t -> t.getTrader().getCity()).distinct().toList();
+
+        listeVille.forEach(System.out::println);
 
     }
 
     private void map2() {
         System.out.println("map2");
         // TODO transformer
+        List<Trader> listeTrader = transactions.stream()
+                .map(Transaction::getTrader).distinct()
+                .filter(trader -> trader.getCity().equals("Cambridge")).toList();
+        listeTrader.forEach(System.out::println);
     }
 
     private void map3() {
         System.out.println("map3");
+
+        String tousLesNom = transactions.stream()
+                .map(t -> t.getTrader().getName()).distinct().collect(Collectors.joining(","));
+
+        System.out.println(tousLesNom);
+
     }
+
     private void sort1() {
         System.out.println("sort1");
         var transcTriees = transactions
-                .stream(); // TODO trier
+                .stream() // TODO trier
+                 .sorted(Comparator.comparing(Transaction::getValue));
         transcTriees.forEach(System.out::println);
     }
 
     private void sort2() {
         System.out.println("sort2");
         var nomsTries = transactions
-                .stream(); // TODO trier
+                .stream() // TODO trier
+                .map(t -> t.getTrader().getName()).distinct().sorted().collect(Collectors.joining(","));
 		System.out.println(nomsTries);
     }
     private void reduce1() {
         System.out.println("reduce1");
         // TODO reduce
+        Integer max1 = transactions.stream().map(Transaction::getValue).reduce(Integer.MIN_VALUE, Integer::max);
+        System.out.println(max1);
     }
 
     private void reduce2() {
         System.out.println("reduce2");
         // TODO reduce
-    }
+        Integer max = Integer.MAX_VALUE;
+        Trader trader = new Trader("Ibrahim","Bruxelles");
+        Transaction transaction = new Transaction(trader, 2021,Integer.MAX_VALUE);
 
+        Transaction min1 = transactions.stream().reduce(transaction, (a , e) -> {
+            if (e.getValue() < a.getValue()){
+                return e;
+            }
+            return a;
+        });
+
+        System.out.println(min1);
+    }
 }
