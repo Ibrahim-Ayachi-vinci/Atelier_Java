@@ -4,10 +4,7 @@ package main;
 import domaine.Trader;
 import domaine.Transaction;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ExerciceGroupingBy {
@@ -56,12 +53,19 @@ public class ExerciceGroupingBy {
 
     private void groupBy1() {
         System.out.println("GroupBy1");
+        Map<Trader, List<Transaction>> traderListMap =
+                transactions.stream().collect(Collectors.groupingBy(Transaction::getTrader));
+
+        System.out.println(traderListMap);
 
     }
 
     private void groupBy2() {
         System.out.println("GroupBy2");
+        Map<Trader,Long> traderLongMap =
+                transactions.stream().collect(Collectors.groupingBy(Transaction::getTrader, Collectors.counting()));
 
+        System.out.println(traderLongMap);
     }
 
 

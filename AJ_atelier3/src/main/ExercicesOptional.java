@@ -60,12 +60,32 @@ public class ExercicesOptional {
 
     private void optional1() {
         System.out.println("optional1");
+        System.out.println("reduce1");
+        // TODO reduce
+        Integer max1 = transactions.stream().map(Transaction::getValue).reduce(Integer::max).orElse(-1);
+        System.out.println(max1);
 
     }
 
     private void optional2() {
         System.out.println("optional2");
+        // TODO reduce
+        Integer max = Integer.MAX_VALUE;
+        Trader trader = new Trader("Ibrahim","Bruxelles");
+        Transaction transaction = new Transaction(trader, 2021,Integer.MAX_VALUE);
 
+        Optional <Transaction> min1 = transactions.stream().reduce((a,e) -> {
+            if (e.getValue() < a.getValue()){
+                return e;
+            }
+            return a;
+        });
+
+        if(min1.isEmpty()){
+            System.out.println("message");
+        }else {
+            System.out.println(min1.get());
+        }
     }
 
 }
