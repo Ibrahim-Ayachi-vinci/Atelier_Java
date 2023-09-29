@@ -7,15 +7,16 @@ import java.util.*;
 
 public class Plat {
 
-    private String nom;
-    private int nbPersonne;
+    private final String nom;
+    private final int nbPersonne;
     private Difficulte niveauDeDifficulte;
     private Cout cout;
     private Duration dureeEnMinute;
     private List<Instruction> recette;
     private Set <IngredientQuantifie> ingredients;
+    private Type type;
 
-    public Plat(String nom, int nbPersonne, Difficulte niveauDeDifficulte, Cout cout){
+    public Plat(String nom, int nbPersonne, Difficulte niveauDeDifficulte, Cout cout, Type type){
         Util.checkString(nom);
         Util.checkPositiveOrNul(nbPersonne);
         Util.checkObject(niveauDeDifficulte);
@@ -25,6 +26,7 @@ public class Plat {
         this.niveauDeDifficulte = niveauDeDifficulte;
         this.cout = cout;
         this.dureeEnMinute = Duration.ofMinutes(0);
+        this.type = type;
 
         recette = new ArrayList<Instruction>();
         ingredients = new HashSet<IngredientQuantifie>();
@@ -50,6 +52,9 @@ public class Plat {
         return dureeEnMinute;
     }
 
+    public Type getType() {
+        return type;
+    }
 
     public void insererInstruction(int position, Instruction instruction) {
         Util.checkStrictlyPositive(position);
@@ -213,6 +218,18 @@ public class Plat {
                     break;
             }
             return text;
+        }
+    }
+    public enum Type {
+        ENTREE("Entrée"), PLAT("Plat"), DESSERT("Dessert");
+
+        private String nom;
+
+        Type(String nom){
+            this.nom = nom;
+        }
+        public String getNom() {
+            return this.nom;
         }
     }
 }
