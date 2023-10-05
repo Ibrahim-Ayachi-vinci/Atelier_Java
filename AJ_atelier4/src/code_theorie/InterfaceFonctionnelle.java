@@ -1,4 +1,6 @@
 package code_theorie;
 
-public class InterfaceFonctionnelle {
+import domaine.Employe;
+
+public class InterfaceFonctionnelle{
 }

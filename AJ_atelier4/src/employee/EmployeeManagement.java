@@ -1,11 +1,19 @@
 package employee;
 
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toList;
 
 public class EmployeeManagement {
 
@@ -17,8 +25,15 @@ public class EmployeeManagement {
     private static final Supplier<Stream<String>> supplier = () -> {
         //TODO: retourner un stream créer à partir du fichier. Aidez vous de la p.15 : "Créer des streams"
         //      En cas d'IOException, vous devez lancer une UncheckedIOException
-        return null;
+        try {
+            Stream<String> lignes =
+                    Files.lines(Paths.get("./resources/streamingvf.csv"), Charset.defaultCharset());
+            return lignes;
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
     };
+
 
     public static void main(String[] args) {
 
@@ -41,8 +56,10 @@ public class EmployeeManagement {
      * @return une String contenant la première ligne du fichier
      */
     private static String firstLine() {
-        //TODO
-        return null;
+        try(Stream<String> ligne = supplier.get();){
+            return ligne.findFirst().get();
+        }
+
     }
 
 

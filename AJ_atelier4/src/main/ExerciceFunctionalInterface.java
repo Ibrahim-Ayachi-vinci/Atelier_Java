@@ -1,5 +1,8 @@
 package main;
 
+import code_theorie.PredicatEmploye;
+import code_theorie.PredicatGenreHomme;
+import code_theorie.PredicatNom;
 import domaine.Employe;
 import domaine.Genre;
 
@@ -32,10 +35,14 @@ public class ExerciceFunctionalInterface {
      * Replacer l'instatiation de la classe EmployeComparator par un lambda
      */
     private static void exComparator() {
-        employes.sort(new EmployeComparator());
+        employes.sort((a, e) ->{
+            if (a.getTaille() == e.getTaille()){
+                return a.getNom().compareTo(e.getNom());
+            }
+            return e.getTaille() - a.getTaille();
+        });
         System.out.println("Employés triés:");
         System.out.println(employes);
-
 
     }
 
@@ -46,10 +53,10 @@ public class ExerciceFunctionalInterface {
      */
     private static void exMap() {
         Stream<String> listeNom = employes.stream()
-                .filter(e -> e.getGenre() == Genre.HOMME)
+                .filter(new PredicatGenreHomme())
                 .sorted(Comparator.comparingInt(Employe::getTaille)
                         .reversed())
-                .map( e -> e.getNom());
+                .map(new PredicatNom());
         listeNom.forEach(System.out::println);
 
     }
@@ -61,7 +68,7 @@ public class ExerciceFunctionalInterface {
      * remplacer le lambda en paramètre par une instance de celle-ci.
      */
     private static void exForEach(){
-        employes.forEach(e -> System.out.println(e));
+        employes.forEach(new PredicatEmploye());
 
 
     }
