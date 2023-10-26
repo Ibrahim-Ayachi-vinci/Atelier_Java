@@ -15,8 +15,9 @@ public class Classes {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public JsonStructure getClassInfo(@QueryParam("classname") String classname) {
-        ClassAnalyzer analyzer = new ClassAnalyzer(User.class);
+    public JsonStructure getClassInfo(@QueryParam("classname") String classname) throws ClassNotFoundException {
+        Class<?> maClasse = Class.forName("be.vinci.classes."+classname);
+        ClassAnalyzer analyzer = new ClassAnalyzer(maClasse);
         return analyzer.getFullInfo();
     }
 }
