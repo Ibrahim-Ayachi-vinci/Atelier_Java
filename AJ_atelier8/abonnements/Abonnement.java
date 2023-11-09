@@ -16,7 +16,7 @@ public class Abonnement extends Thread {
     public void run() {
         while(compte.depenser(new Depense(prixMensuel, "domiciliation pour " + nom))) {
             try {
-                Thread.sleep(500);
+                Thread.sleep(50);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
