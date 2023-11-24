@@ -2,16 +2,20 @@ package server;
 
 import java.util.Scanner;
 
+import blacklist.BlacklistService;
 import domaine.Query;
 import domaine.Query.QueryMethod;
 import domaine.QueryFactory;
 
 public class ProxyServer {
 	
-	QueryFactory queryFactory;
+	private QueryFactory queryFactory;
 
-	public ProxyServer(QueryFactory queryFactory) {
+	private BlacklistService blacklistService;
+
+	public ProxyServer(QueryFactory queryFactory, BlacklistService blacklistService) {
 		this.queryFactory = queryFactory;
+		this.blacklistService = blacklistService;
 	}
 	
 	public void startServer() {
@@ -21,8 +25,12 @@ public class ProxyServer {
 				Query query = this.queryFactory.getQuery();
 				query.setMethod(QueryMethod.GET);
 				query.setUrl(url);
-				QueryHandler queryHandler = new QueryHandler(query);
-				queryHandler.start();
+				if (blacklistService.check(query)){
+					QueryHandler queryHandler = new QueryHandler(query);
+					queryHandler.start();
+				}else{
+					System.out.println("the url is blacklist");
+				}
 			}
 		}
 	}
